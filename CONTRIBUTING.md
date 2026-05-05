@@ -1,12 +1,12 @@
-# Cómo contribuir a madkit
+# Cómo contribuir a Multi-Agent Development Kit
 
 Gracias por considerar contribuir. Este proyecto está en alpha — feedback y PRs son muy bienvenidos.
 
 ## Setup local
 
 ```bash
-git clone https://github.com/multi-agent-development-kit/madkit.git
-cd madkit
+git clone https://github.com/multi-agent-development-kit/dev-kit.git
+cd dev-kit
 uv venv
 uv pip install -e ".[dev]"
 pytest

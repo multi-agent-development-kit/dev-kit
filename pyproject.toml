@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "madkit"
-version = "0.1.4"
-description = "Multi-Agent Development Kit — CLI para scaffolding multi-IDE de proyectos asistidos por agentes."
+version = "0.2.0"
+description = "Multi-Agent Development Kit — CLI para scaffolding multi-IDE + framework de templates con continuidad inter-sesión vía memoria persistente."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.11"
@@ -40,10 +40,11 @@ dev = [
 madkit = "madkit.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/multi-agent-development-kit/madkit"
-Repository = "https://github.com/multi-agent-development-kit/madkit"
-Issues = "https://github.com/multi-agent-development-kit/madkit/issues"
-Discussions = "https://github.com/multi-agent-development-kit/madkit/discussions"
+Homepage = "https://github.com/multi-agent-development-kit/dev-kit"
+Repository = "https://github.com/multi-agent-development-kit/dev-kit"
+Issues = "https://github.com/multi-agent-development-kit/dev-kit/issues"
+Discussions = "https://github.com/multi-agent-development-kit/dev-kit/discussions"
+Changelog = "https://github.com/multi-agent-development-kit/dev-kit/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/madkit"]

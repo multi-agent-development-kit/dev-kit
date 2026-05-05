@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/multi-agent-development-kit/madkit"
+    "url": "https://github.com/multi-agent-development-kit/dev-kit"
   },
   "license": "MIT"
 }

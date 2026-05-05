@@ -32,7 +32,7 @@ Requiere [`uv`](https://docs.astral.sh/uv/) y Python ≥3.11.
 ## Instalación desde fuente (desarrollador)
 
 ```bash
-git clone https://github.com/multi-agent-development-kit/madkit.git
+git clone https://github.com/multi-agent-development-kit/dev-kit.git
 cd madkit
 pip install -e ".[dev]"
 madkit iniciar /tmp/test-proyecto
@@ -187,8 +187,8 @@ Todo agente desplegado por este framework hereda estos principios (declarados en
 
 ## Enlaces
 
-- Issues: https://github.com/multi-agent-development-kit/madkit/issues
-- Discussions: https://github.com/multi-agent-development-kit/madkit/discussions
+- Issues: https://github.com/multi-agent-development-kit/dev-kit/issues
+- Discussions: https://github.com/multi-agent-development-kit/dev-kit/discussions
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 - Cómo contribuir: [CONTRIBUTING.md](CONTRIBUTING.md)
 

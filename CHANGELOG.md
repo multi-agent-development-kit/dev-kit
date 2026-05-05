@@ -2,6 +2,42 @@
 
 Todas las versiones notables se documentan aquí. Sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y [SemVer](https://semver.org/lang/es/).
 
+## [0.2.0] — 2026-05-06
+
+### Cambiado — consolidación a repo único
+
+- **Nuevo repo canónico:** [`multi-agent-development-kit/dev-kit`](https://github.com/multi-agent-development-kit/dev-kit). Consolidación de `AI-Coding-Resources/claude-templates/` (fuente canónica privada) + `multi-agent-development-kit/madkit` (paquete Python). Una sola fuente de verdad — sin sincronización entre repos. Ver T095.
+- **Templates de Claude en raíz directa:** `agents/`, `commands/`, `skills/`, `hooks/`, `CLAUDE.md.template`. En modo desarrollo (`pip install -e .`) `embeds.py` los lee desde raíz; al construir el wheel se copian a `madkit/templates/claude/` vía `[tool.hatch.build.targets.wheel.force-include]`. Contrato `importlib.resources` preservado.
+- **URLs `[project.urls]`** apuntan al nuevo repo `dev-kit`.
+
+### Añadido — calidad y coherencia (tasks 089-094)
+
+- **T089 task-doc-validator v1.1.1**: alineado con el formato real de los task docs producidos por el framework — cabeceras blockquote `Estado/Fecha/Complejidad/Alcance` ahora opcionales; única sección obligatoria es "Criterios de Éxito" (h2 o h3, case-insensitive con/sin tilde); regex de extracción `^#{2,3}\s+...`. Fix de `CRITERIA_SECTION_REGEX` (lookahead que solo capturaba 1 checkbox).
+- **T090 tests unitarios hooks**: `hooks/tests/` con helper cross-platform, 3 fixtures, 5 archivos `*.test.js` (20 casos: validator 6 + context-monitor 4 + prompt-guard 3 + scaffolding-guard 4 + session-state 3). Cero deps npm externas (`node:test` nativo). 20/20 pass en Windows + POSIX. Cleanup pattern `t.after`.
+- **T091 task-planner Paso 0 lee STATE.md**: cierra el loop con `session-state` hook (T081). Defense-in-depth necesaria porque subagents no heredan `additionalContext` del SessionStart.
+- **T092 fix bugs menores hooks**: shadowing de `lastFile` en `context-monitor.js`; quoting de path en `session-state.sh`. Ambos `hook-version` 1.0.0 → 1.0.1.
+- **T094 cleanup drift narrativo**: conteos sincronizados en cabeceras (50 templates / 8 agents / 27 → ahora 29 skills / 5 secciones transversales).
+
+### Añadido — disciplina y diferenciación (tasks 093, 096-098)
+
+- **T093 4 Principios de Ingeniería transversales** en `CLAUDE.md.template` como sección nueva (P1 Don't assume / P2 Minimum code / P3 Touch only what you must / P4 Define success criteria). Fuente única literal en inglés. Mapping dual a las 6 dimensiones de `plan-checker`. Referenciados por etiqueta en task-agent (P1+P4), implementer (P2+P3), reviewer (P1-P4 BLOCKING), plan-checker (mapping).
+- **T096 README diferenciador — memoria persistente**: nueva sección "Memoria persistente — continuidad inter-sesión" con diagrama del loop (context-monitor → STATE.md → session-state) + tabla de 4 lugares de memoria + comparación explícita con spec-kit. Comunica la pieza diferenciadora real del framework.
+- **T097 skill `clarify`** (effort medium, sin fork): operacionaliza P1 antes del `task-planner`. 4 señales de detección de ambigüedad estructural; produce 3-5 preguntas concretas con opciones A/B/C; encadena al planner con intent enriquecido. Reduce reaperturas del `plan-checker`. `task-agent` Triaje Rápido punto 0 nuevo.
+- **T098 skill `tasks-to-issues`** (effort low, `allowed-tools: Bash, Read`): mapeo unidireccional task doc → GitHub issue vía `gh`. Idempotente (detecta "Issue: #" en lifecycle). Pre-validaciones de auth + repo + secrets básicos. Solo bajo petición explícita.
+
+### Conteos
+
+- **50 templates totales:** 14 commands + 29 skills + 8 agents + 1 CLAUDE.md.template (en realidad 51 con T097 + T098, pero el conteo base de plantillas pre-deploy es 50 — ver `CLAUDE.md.template` "Estado actual").
+- **8 subagents:** task-planner, reviewer, adk (opus) / implementer, doc-syncer, researcher, orientador (sonnet) / git-guardian (haiku).
+- **5 hooks deployables opt-in:** context-monitor, prompt-guard, scaffolding-guard, task-doc-validator, session-state.
+- **6 IDEs soportados** (sin cambio): Claude Code, Cursor, Codex, Cline, Continue, Windsurf.
+
+### Verificación
+
+- 20/20 tests JS hooks pass (cross-platform).
+- 138/138 tests pytest pass (paquete + adapters + validators).
+- `madkit iniciar /tmp/test --ide=claude` despliega 8 agents + 29 skills + 5 hooks correctamente.
+
 ## [0.1.4] — 2026-05-05
 
 ### Cambiado
