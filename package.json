@@ -1,0 +1,22 @@
+{
+  "name": "multi-agent-development-kit",
+  "version": "0.1.4",
+  "private": true,
+  "description": "Scripts de desarrollo (pass-through) para el Multi-Agent Development Kit. La distribución end-user se hace vía el paquete Python `madkit` (uvx/uv tool).",
+  "scripts": {
+    "test": "cd hooks/tests && npm test",
+    "test:hooks": "cd hooks/tests && npm test",
+    "test:py": "pytest tests/",
+    "lint:py": "ruff check src/ tests/",
+    "build": "python -m build",
+    "install:dev": "pip install -e \".[dev]\""
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/multi-agent-development-kit/madkit"
+  },
+  "license": "MIT"
+}
