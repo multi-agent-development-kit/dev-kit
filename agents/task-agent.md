@@ -105,6 +105,7 @@ P2 y P3 también aplican al planning (no proponer scope inflado, no proponer abs
 
 Antes de seleccionar y ejecutar el comando, evaluar:
 
+0. **Ambigüedad estructural (P1):** Antes del triaje propio, ¿la petición tiene alcance vago, tradeoffs implícitos, criterio de éxito sin definir o dependencias asumidas? Si SÍ → activar la skill `clarify` para producir 3-5 preguntas concretas al usuario y recibir intent enriquecido. Si NO → continuar al punto 1. Una iteración corta aquí ahorra reaperturas del `plan-checker`.
 1. **Radio de impacto:** ¿Cuántos archivos/módulos/servicios afecta la petición? Esto determina la complejidad real, no la intuida.
 2. **Prerequisitos:** ¿Necesita código, infraestructura o configuración que no existe? Si hay prerequisitos bloqueantes → comunicarlos al usuario y proponer crearlos como tareas separadas.
 3. **Atomicidad:** ¿Es una tarea o varias disfrazadas de una? Si la petición cubre 2+ funcionalidades independientes → proponer desglose al usuario ANTES de delegar.
@@ -227,4 +228,4 @@ Triaje y criterio analítico se quedan en `task-planner`. La ejecución se deleg
 
 ---
 
-*Versión: 3.8.1 | Actualización: 2026-05-05 — task 091 (Paso 0 lee `ai_docs/STATE.md` antes de `core/`, cierra loop con session-state hook T081) + task 093 (sección "Anclaje en Principios de Ingeniería" P1+P4 entre Paso 0.7 y Triaje Rápido)*
+*Versión: 3.8.2 | Actualización: 2026-05-05 — tasks 091+093 + 097 (Triaje Rápido punto 0 nuevo: activar skill `clarify` ante ambigüedad estructural antes del triaje propio)*

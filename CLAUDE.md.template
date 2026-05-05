@@ -125,8 +125,9 @@ Delegar a subagentes (Agent tool) **aísla contexto**: los logs, greps y lectura
 
 ### Casos donde sí delegar
 
-| Caso | Subagent | Por qué |
+| Caso | Subagent / Skill | Por qué |
 |---|---|---|
+| **Petición ambigua antes del plan** (alcance vago, tradeoff implícito, criterio sin definir, dependencia asumida) | skill `clarify` (medium) | Operacionaliza P1 "Don't assume". Produce 3-5 preguntas concretas con opciones A/B/C; tras respuesta, encadena al `task-planner` con intent enriquecido. Reduce reaperturas del `plan-checker`. |
 | **Investigación exhaustiva previa al triaje** (>3 archivos probables, cambio con acoplamientos no triviales) | `researcher` (sonnet xhigh) | Mapea dependencias, callers, callees, contratos afectados en código real. Reemplaza al built-in Explore (descartado por falsos positivos). |
 | **Consulta a refs externos** (`ai_docs/refs/`, documentación SDK) | `researcher` | Extrae fragmento canónico de volúmenes grandes sin cargarlos en el padre. |
 | **Ejecución mecánica de un plan ya triado** | `implementer` (sonnet high) | Hace los cambios sin tomar decisiones de estrategia. Puede paralelizarse en N módulos disjuntos. |

@@ -112,6 +112,57 @@ Multi-Agent Development Kit/
 
 ---
 
+## Memoria persistente — continuidad inter-sesión
+
+**El diferenciador real del framework.** Mientras que la mayoría de frameworks de agentes (spec-kit, agent-os, etc.) arrancan cada sesión limpia y exigen al usuario re-explicar el contexto, este framework retoma exactamente donde se quedó la sesión anterior — sin gastar contexto del modelo en resumir.
+
+### El loop completo
+
+```
+Sesión activa                        Sesión nueva
+─────────────                        ────────────
+tool use ──► context-monitor                      ┌──► session-state (SessionStart)
+              hook (PostToolUse)                  │     hook lee head 20 líneas
+              │                                   │     e inyecta como
+              │ contexto restante                 │     additionalContext
+              ▼                                   │
+         ≤10% restante?                           │
+              │                                   │
+              │ sí                                │
+              ▼                                   │
+       ai_docs/STATE.md ◄────────────────────────┘
+       (breadcrumb con
+        active_task, phase,
+        last_action,
+        timestamp, session_id)
+```
+
+El usuario no toca nada. El agente de la nueva sesión despierta orientado: sabe qué tarea estaba activa, en qué fase iba, qué fue lo último que hizo. **Cero re-onboarding.**
+
+### Cuatro lugares de memoria, cada uno con su rol
+
+| Pieza | Vida | Quién escribe | Quién lee |
+|---|---|---|---|
+| `ai_docs/STATE.md` | sesiones consecutivas (breadcrumb) | `context-monitor.js` cuando contexto ≤10% | `session-state.sh` (SessionStart) + `task-planner` Paso 0 |
+| `MEMORY.md` (harness) | persistente cross-conversación | Claude Code automáticamente | Claude Code en cada turno |
+| `ai_docs/core/*.md` | persistente cross-conversación, evoluciona con el proyecto | Tú + `doc-syncer` agent | `task-planner` Paso 0 + agentes que lo necesiten |
+| Task docs `ai_docs/tasks/NNN_*.md` | un archivo por cambio del proyecto | `task-planner` agent | El que retome la tarea |
+
+### Comparación con spec-kit
+
+| Aspecto | spec-kit | Multi-Agent Development Kit |
+|---|---|---|
+| Continuidad inter-sesión | Cada sesión limpia | Loop completo: STATE.md + session-state hook |
+| Memoria semántica del agente | No | `MEMORY.md` harness-managed (preferencias, feedback, contexto del usuario) |
+| Núcleo persistente del proyecto | `specs/<branch>/` por feature | `ai_docs/core/` evoluciona como vista viva del proyecto |
+| Re-orientación tras context exhaustion | Manual por el usuario | Automática vía breadcrumb |
+
+### Requisito
+
+Claude Code **2026+** (necesario para los hooks `PostToolUse` y `SessionStart`). Los demás IDEs reciben los templates pero el loop de memoria es exclusivo de Claude Code por dependencia de hooks. Ver `hooks/README.md` para detalles de instalación opt-in.
+
+---
+
 ## Comandos de desarrollo
 
 ```bash
