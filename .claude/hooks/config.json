@@ -1,0 +1,15 @@
+{
+  "_comment": "Dogfooding: todos los hooks activos sobre el repo en sí. Si alguno introduce fricción al desarrollar el framework, desactivar aquí (false) en lugar de borrar. Ver hooks/README.md para detalles. T099.",
+
+  "context_monitor": true,
+
+  "prompt_guard": {
+    "mode": "advisory"
+  },
+
+  "scaffolding_guard": true,
+
+  "task_doc_validator": true,
+
+  "session_state": true
+}

@@ -50,9 +50,10 @@ Changelog = "https://github.com/multi-agent-development-kit/dev-kit/blob/main/CH
 packages = ["src/madkit"]
 
 [tool.hatch.build.targets.wheel.force-include]
-# Adapters multi-IDE no-Claude (scaffolds del CLI) — bundle directo:
-"src/madkit/templates" = "madkit/templates"
-
+# Adapters multi-IDE no-Claude (cursor/codex/cline/continue/windsurf) ya están
+# bajo `src/madkit/templates/<ide>/` y se incluyen automáticamente vía
+# `packages = ["src/madkit"]` arriba — NO añadirlos aquí (causa duplicados).
+#
 # Templates de Claude viven en raíz como fuente canónica. Hatchling los copia
 # al wheel bajo `madkit/templates/claude/<sub>/` para preservar el contrato
 # de `importlib.resources` que usa `embeds.py:templates_root_for("claude")`.

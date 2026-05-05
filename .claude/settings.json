@@ -1,0 +1,35 @@
+{
+  "_comment": "Settings de Claude Code para el repo Multi-Agent Development Kit. Registra los 5 hooks deployables del framework (dogfooding). T099.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          { "type": "command", "command": "node .claude/hooks/prompt-guard.js" },
+          { "type": "command", "command": "node .claude/hooks/task-doc-validator.js" }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "bash .claude/hooks/scaffolding-guard.sh" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          { "type": "command", "command": "node .claude/hooks/context-monitor.js" }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "bash .claude/hooks/session-state.sh" }
+        ]
+      }
+    ]
+  }
+}
